@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
-import { UserEntity } from './user.entity';
+import { User } from './user.entity';
 import { UserService } from './users.service';
 import { UserResponseDto } from './dtos/user-response.dto';
 
@@ -21,7 +21,7 @@ export class UsersController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
-  find(): UserEntity[] {
+  find(): User[] {
     return this.userService.findUsers();
   }
 

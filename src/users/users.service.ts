@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { UserEntity } from './user.entity';
+import { User } from './user.entity';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { v4 as uuid } from 'uuid';
@@ -7,9 +7,9 @@ import { UserResponseDto } from './dtos/user-response.dto';
 
 @Injectable()
 export class UserService {
-  private users: UserEntity[] = [];
+  private users: User[] = [];
 
-  findUsers(): UserEntity[] {
+  findUsers(): User[] {
     return this.users;
   }
 
@@ -22,7 +22,7 @@ export class UserService {
   }
 
   createUser(createUserDto: CreateUserDto): UserResponseDto {
-    const newUser: UserEntity = {
+    const newUser: User = {
       ...createUserDto,
       id: uuid(),
     };
@@ -31,7 +31,7 @@ export class UserService {
     return new UserResponseDto(newUser);
   }
 
-  updateUser(id: string, updateUserDto: UpdateUserDto): UserEntity {
+  updateUser(id: string, updateUserDto: UpdateUserDto): User {
     // 1) find the element index that we want to update
     const index = this.users.findIndex((user) => user.id === id);
     // 2) update the element

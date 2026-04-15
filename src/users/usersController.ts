@@ -13,6 +13,7 @@ import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { UserService } from './users.service';
 import { User } from './schema/user.schema';
+import { ParseMongoIdPipe } from '../mongo/pipes/parse-mongo-id.pipe';
 
 @Controller('users')
 export class UsersController {
@@ -25,7 +26,7 @@ export class UsersController {
 
   @Get(':id')
   async findOne(
-    @Param('id')
+    @Param('id', ParseMongoIdPipe)
     id: string,
   ): Promise<User> {
     return this.userService.findUserById(id);
@@ -41,7 +42,7 @@ export class UsersController {
 
   @Patch(':id')
   async update(
-    @Param('id') id: string,
+    @Param('id', ParseMongoIdPipe) id: string,
     @Body()
     updateUserDto: UpdateUserDto,
   ): Promise<User> {
@@ -50,7 +51,7 @@ export class UsersController {
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  async remove(@Param('id') id: string): Promise<void> {
+  async remove(@Param('id', ParseMongoIdPipe) id: string): Promise<void> {
     await this.userService.deleteUser(id);
   }
 }

@@ -4,10 +4,13 @@ import { UpdateUserDto } from './dtos/update-user.dto';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { v4 as uuid } from 'uuid';
 import { UserResponseDto } from './dtos/user-response.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { User, UserDocument } from './schema/user.schema';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class UserService {
-  private users: UserEntity[] = [];
+  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
   findUsers(): UserEntity[] {
     return this.users;
